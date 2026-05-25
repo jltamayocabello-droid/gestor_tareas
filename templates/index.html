@@ -10,22 +10,31 @@
     <main>
         <h1>Gestor de Tareas</h1>
 
-        <form class="form-agregar" action="/agregar" method="post">
-            <input type="text" name="texto_tarea" placeholder="Nueva tarea" required>
+        {# Formulario POST hacia la vista agregar #}
+        <form class="form-agregar" action="{{ url_for('agregar') }}" method="post">
+            <input
+                type="text"
+                name="texto_tarea"
+                placeholder="Nueva tarea"
+                required
+            >
             <button type="submit">Agregar</button>
         </form>
 
+        {# Listado de tareas ordenadas (incompletas primero) #}
         <ul class="lista-tareas">
-            {% for tarea in tareas %}
-            <li class="{% if tarea.hecho %}completada{% endif %}">
-                <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
-                {% if not tarea.hecho %}
-                <a href="/completar/{{ tarea.id }}">Completar</a>
-                {% endif %}
-            </li>
+            {% if tareas %}
+                {% for tarea in tareas %}
+                <li class="{{ 'completada' if tarea.hecho else '' }}">
+                    <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
+                    {% if not tarea.hecho %}
+                    <a href="{{ url_for('completar', id=tarea.id) }}">Completar</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
             {% else %}
-            <li class="vacio">No hay tareas.</li>
-            {% endfor %}
+                <li class="vacio">No hay tareas.</li>
+            {% endif %}
         </ul>
     </main>
 </body>
