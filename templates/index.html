@@ -10,15 +10,18 @@
     <main>
         <h1>Gestor de Tareas</h1>
 
+        {# Formulario para enviar nuevas tareas a la ruta /agregar #}
         <form class="form-agregar" action="{{ url_for('agregar') }}" method="post">
             <input type="text" name="texto" placeholder="Nueva tarea" required>
             <button type="submit">Agregar</button>
         </form>
 
+        {# Recorre la lista global pasada desde app.py #}
         <ul class="lista-tareas">
             {% for tarea in tareas %}
             <li class="{% if tarea.completada %}completada{% endif %}">
                 <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
+                {# Solo las tareas pendientes muestran el botón de completar #}
                 {% if not tarea.completada %}
                 <form action="{{ url_for('completar', id=tarea.id) }}" method="post">
                     <button type="submit">Completar</button>
@@ -26,6 +29,7 @@
                 {% endif %}
             </li>
             {% else %}
+            {# Se ejecuta si la lista está vacía #}
             <li class="vacio">No hay tareas.</li>
             {% endfor %}
         </ul>

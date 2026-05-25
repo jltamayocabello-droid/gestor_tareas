@@ -25,6 +25,7 @@ h1 {
     margin-bottom: 1rem;
 }
 
+/* Formulario de alta de tareas */
 .form-agregar {
     display: flex;
     gap: 0.5rem;
@@ -36,6 +37,7 @@ h1 {
     padding: 0.5rem;
 }
 
+/* Listado de tareas */
 .lista-tareas {
     list-style: none;
 }
@@ -49,6 +51,7 @@ h1 {
     border-bottom: 1px solid #eee;
 }
 
+/* Tareas ya completadas: texto tachado y atenuado */
 .lista-tareas li.completada span {
     text-decoration: line-through;
     color: #888;
