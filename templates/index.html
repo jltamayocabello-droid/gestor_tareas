@@ -1,57 +1,95 @@
-<!-- Heredamos toda la estructura base -->
 {% extends "base.html" %}
 
-{% block title %}Gestor de Tareas{% endblock %}
+{% block title %}Dashboard - TaskManager Pro{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
+<div class="container py-4 py-lg-5">
 
-        <!-- Tarjeta para agregar nueva tarea -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <form action="{{ url_for('agregar') }}" method="POST" class="d-flex gap-2">
-                    <input type="text" name="texto_tarea" class="form-control" placeholder="¿Qué necesitas hacer hoy?" required>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
-                </form>
-            </div>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
+        <div>
+            <h2 class="fw-bold mb-0">Mis Tareas</h2>
+            <p class="text-muted mb-0">Gestiona tu productividad</p>
         </div>
+        <button type="button" class="btn btn-primary btn-lg shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+            + Nueva Tarea
+        </button>
+    </div>
 
-        <!-- Lista de Tareas -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Tus Tareas</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                {% for tarea in tareas %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center {{ 'bg-light text-muted' if tarea.hecho else '' }}">
-
-                        <span class="{{ 'text-decoration-line-through' if tarea.hecho else '' }}">
-                            {{ tarea.texto }}
+    <div class="row g-4">
+        {% for tarea in tareas %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card task-card h-100 border-0 shadow-sm {{ 'task-card--done' if tarea.hecho else '' }}">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <span class="badge {{ 'bg-success' if tarea.hecho else 'bg-warning text-dark' }}">
+                            {{ 'Completada' if tarea.hecho else 'Pendiente' }}
                         </span>
+                    </div>
 
-                        <div class="d-flex align-items-center gap-2">
-                            {% if tarea.hecho %}
-                                <span class="badge bg-secondary rounded-pill">Completada</span>
-                            {% else %}
-                                <form action="{{ url_for('completar', id=tarea.id) }}" method="POST" class="m-0">
-                                    <button type="submit" class="btn btn-sm btn-outline-success">Completar</button>
-                                </form>
-                            {% endif %}
-                            <form action="{{ url_for('eliminar', id=tarea.id) }}" method="POST" class="m-0">
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
-                            </form>
-                        </div>
+                    <h5 class="card-title fw-semibold mb-0 {{ 'text-decoration-line-through text-muted' if tarea.hecho else '' }}">
+                        {{ tarea.texto }}
+                    </h5>
+                </div>
 
-                    </li>
-                {% else %}
-                    <li class="list-group-item text-center text-muted py-4">
-                        No hay tareas pendientes. ¡Buen trabajo!
-                    </li>
-                {% endfor %}
-            </ul>
+                <div class="card-footer bg-transparent border-0 d-flex justify-content-end gap-2 pb-3 px-3">
+                    {% if not tarea.hecho %}
+                    <form action="{{ url_for('completar', id=tarea.id) }}" method="POST" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-success">✔ Completar</button>
+                    </form>
+                    {% else %}
+                    <button type="button" class="btn btn-sm btn-secondary" disabled>Finalizada</button>
+                    {% endif %}
+                    <form action="{{ url_for('eliminar', id=tarea.id) }}" method="POST" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
         </div>
+        {% else %}
+        <div class="col-12">
+            <div class="empty-state text-center py-5 px-4">
+                <div class="empty-state-icon mb-3">☕</div>
+                <h5 class="text-muted mb-2">No tienes tareas pendientes</h5>
+                <p class="text-muted small mb-4">¡Tómate un café o crea tu primera tarea!</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+                    + Nueva Tarea
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
+<div class="modal fade" id="modalNuevaTarea" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Crear Tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <form action="{{ url_for('agregar') }}" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="texto_tarea" class="form-label text-muted small">Descripción</label>
+                        <input
+                            type="text"
+                            id="texto_tarea"
+                            name="texto_tarea"
+                            class="form-control form-control-lg"
+                            placeholder="Ej. Revisar PR en GitHub..."
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

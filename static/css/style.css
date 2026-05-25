@@ -1,6 +1,93 @@
-/* Complementos sobre Bootstrap 5 */
+:root {
+    --app-primary: #4f46e5;
+    --app-primary-dark: #4338ca;
+    --app-surface: #ffffff;
+    --app-bg-start: #f8fafc;
+    --app-bg-end: #eef2ff;
+}
 
-.lista-tareas .list-group-item.completada span {
-    text-decoration: line-through;
-    color: var(--bs-secondary-color);
+body {
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    background: linear-gradient(160deg, var(--app-bg-start) 0%, var(--app-bg-end) 100%);
+    min-height: 100vh;
+}
+
+.app-navbar {
+    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-dark) 100%);
+}
+
+.app-navbar .navbar-brand {
+    letter-spacing: -0.02em;
+}
+
+.brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-dark) 100%);
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(135deg, var(--app-primary-dark) 0%, #3730a3 100%);
+    border: none;
+}
+
+.task-card {
+    background: var(--app-surface);
+    border-radius: 1rem !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgba(79, 70, 229, 0.12) !important;
+}
+
+.task-card--done {
+    opacity: 0.85;
+}
+
+.task-card .card-title {
+    line-height: 1.4;
+}
+
+.empty-state {
+    background: var(--app-surface);
+    border-radius: 1.25rem;
+    box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.06);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.modal-content {
+    border-radius: 1rem !important;
+}
+
+.modal-content .form-control {
+    border-radius: 0.75rem;
+    background-color: var(--app-bg-start);
+    border-color: #e2e8f0;
+}
+
+.modal-content .form-control:focus {
+    background-color: #fff;
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+}
+
+.app-footer {
+    margin-top: auto;
 }
