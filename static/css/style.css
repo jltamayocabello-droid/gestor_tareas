@@ -22,5 +22,39 @@ main {
 }
 
 h1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-agregar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-agregar input {
+    flex: 1;
+    padding: 0.5rem;
+}
+
+.lista-tareas {
+    list-style: none;
+}
+
+.lista-tareas li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.lista-tareas li.completada span {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.lista-tareas li.vacio {
+    color: #888;
+    justify-content: center;
 }

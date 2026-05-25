@@ -9,7 +9,26 @@
 <body>
     <main>
         <h1>Gestor de Tareas</h1>
-        <p>Aplicación Flask lista para desarrollar.</p>
+
+        <form class="form-agregar" action="{{ url_for('agregar') }}" method="post">
+            <input type="text" name="texto" placeholder="Nueva tarea" required>
+            <button type="submit">Agregar</button>
+        </form>
+
+        <ul class="lista-tareas">
+            {% for tarea in tareas %}
+            <li class="{% if tarea.completada %}completada{% endif %}">
+                <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
+                {% if not tarea.completada %}
+                <form action="{{ url_for('completar', id=tarea.id) }}" method="post">
+                    <button type="submit">Completar</button>
+                </form>
+                {% endif %}
+            </li>
+            {% else %}
+            <li class="vacio">No hay tareas.</li>
+            {% endfor %}
+        </ul>
     </main>
 </body>
 </html>
