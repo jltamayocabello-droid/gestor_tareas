@@ -1,93 +1,223 @@
+/* Paleta modo oscuro — Slate */
 :root {
-    --app-primary: #4f46e5;
-    --app-primary-dark: #4338ca;
-    --app-surface: #ffffff;
-    --app-bg-start: #f8fafc;
-    --app-bg-end: #eef2ff;
+    --bg-main: #0f172a;
+    --bg-surface: #1e293b;
+    --border-input: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+
+    --app-primary: #6366f1;
+    --app-primary-hover: #818cf8;
+    --app-success: #22c55e;
+    --app-danger: #ef4444;
+    --app-warning: #fbbf24;
+    --shadow-card: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 0.75rem 2rem rgba(99, 102, 241, 0.2);
 }
 
-body {
+/* Modo oscuro global */
+html.app-dark,
+html.app-dark body {
+    color: var(--text-primary);
+    background-color: var(--bg-main);
+}
+
+html.app-dark body {
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-    background: linear-gradient(160deg, var(--app-bg-start) 0%, var(--app-bg-end) 100%);
     min-height: 100vh;
 }
 
-.app-navbar {
-    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-dark) 100%);
+/* Texto */
+html.app-dark .text-muted,
+html.app-dark .text-secondary-custom {
+    color: var(--text-secondary) !important;
 }
 
-.app-navbar .navbar-brand {
+html.app-dark h1,
+html.app-dark h2,
+html.app-dark h3,
+html.app-dark h4,
+html.app-dark h5,
+html.app-dark h6,
+html.app-dark .card-title {
+    color: var(--text-primary);
+}
+
+html.app-dark .card-title.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+/* Navbar */
+html.app-dark .app-navbar {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-input);
+}
+
+html.app-dark .app-navbar .navbar-brand {
+    color: var(--text-primary);
     letter-spacing: -0.02em;
 }
 
-.brand-icon {
+html.app-dark .brand-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--border-input);
     border-radius: 0.5rem;
     font-size: 1rem;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-dark) 100%);
-    border: none;
+/* Botones primarios */
+html.app-dark .btn-primary {
+    background: var(--app-primary);
+    border: 1px solid var(--app-primary);
+    color: var(--text-primary);
 }
 
-.btn-primary:hover,
-.btn-primary:focus {
-    background: linear-gradient(135deg, var(--app-primary-dark) 0%, #3730a3 100%);
-    border: none;
+html.app-dark .btn-primary:hover,
+html.app-dark .btn-primary:focus {
+    background: var(--app-primary-hover);
+    border-color: var(--app-primary-hover);
+    color: var(--text-primary);
 }
 
-.task-card {
-    background: var(--app-surface);
+html.app-dark .btn-success {
+    background: var(--app-success);
+    border-color: var(--app-success);
+    color: var(--bg-main);
+}
+
+html.app-dark .btn-outline-danger {
+    color: #fca5a5;
+    border-color: var(--app-danger);
+}
+
+html.app-dark .btn-outline-danger:hover {
+    background: var(--app-danger);
+    border-color: var(--app-danger);
+    color: var(--text-primary);
+}
+
+html.app-dark .btn-secondary,
+html.app-dark .btn-secondary:disabled {
+    background: var(--border-input);
+    border-color: var(--border-input);
+    color: var(--text-secondary);
+}
+
+html.app-dark .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border-input);
+    color: var(--text-secondary);
+}
+
+html.app-dark .btn-ghost:hover {
+    background: var(--border-input);
+    border-color: var(--border-input);
+    color: var(--text-primary);
+}
+
+/* Tarjetas */
+html.app-dark .task-card,
+html.app-dark .empty-state {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-input) !important;
     border-radius: 1rem !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-card);
 }
 
-.task-card:hover {
+html.app-dark .task-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+html.app-dark .task-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0.75rem 1.5rem rgba(79, 70, 229, 0.12) !important;
+    box-shadow: var(--shadow-hover);
+    border-color: var(--app-primary) !important;
 }
 
-.task-card--done {
-    opacity: 0.85;
+html.app-dark .task-card--done {
+    opacity: 0.75;
 }
 
-.task-card .card-title {
+html.app-dark .task-card .card-title {
     line-height: 1.4;
 }
 
-.empty-state {
-    background: var(--app-surface);
-    border-radius: 1.25rem;
-    box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.06);
+html.app-dark .task-card .card-footer {
+    border-top: 1px solid var(--border-input) !important;
 }
 
-.empty-state-icon {
-    font-size: 3rem;
-    line-height: 1;
+/* Badges */
+html.app-dark .badge-pending {
+    background: rgba(251, 191, 36, 0.2);
+    color: var(--app-warning);
+    border: 1px solid rgba(251, 191, 36, 0.35);
 }
 
-.modal-content {
+html.app-dark .badge-done {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+/* Modal */
+html.app-dark .modal-content {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-input) !important;
     border-radius: 1rem !important;
+    color: var(--text-primary);
 }
 
-.modal-content .form-control {
+html.app-dark .modal-header,
+html.app-dark .modal-footer {
+    border-color: var(--border-input) !important;
+}
+
+html.app-dark .modal-title {
+    color: var(--text-primary);
+}
+
+html.app-dark .form-label {
+    color: var(--text-secondary);
+}
+
+html.app-dark .form-control {
+    background-color: var(--border-input);
+    border: 1px solid var(--border-input);
+    color: var(--text-primary);
     border-radius: 0.75rem;
-    background-color: var(--app-bg-start);
-    border-color: #e2e8f0;
 }
 
-.modal-content .form-control:focus {
-    background-color: #fff;
+html.app-dark .form-control::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+html.app-dark .form-control:focus {
+    background-color: var(--border-input);
     border-color: var(--app-primary);
-    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
 }
 
-.app-footer {
+html.app-dark .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Footer */
+html.app-dark .app-footer {
     margin-top: auto;
+    border-top: 1px solid var(--border-input);
+}
+
+html.app-dark .app-footer p {
+    color: var(--text-secondary);
+}
+
+/* Backdrop modal en oscuro */
+html.app-dark .modal-backdrop.show {
+    opacity: 0.7;
 }

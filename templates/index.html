@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - TaskManager Pro{% endblock %}
+{% block title %}GESTOR DE TAREAS{% endblock %}
 
 {% block content %}
 <div class="container py-4 py-lg-5">
@@ -8,7 +8,7 @@
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
         <div>
             <h2 class="fw-bold mb-0">Mis Tareas</h2>
-            <p class="text-muted mb-0">Gestiona tu productividad</p>
+            <p class="text-secondary-custom mb-0">Gestiona tu productividad</p>
         </div>
         <button type="button" class="btn btn-primary btn-lg shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
             + Nueva Tarea
@@ -21,7 +21,7 @@
             <div class="card task-card h-100 border-0 shadow-sm {{ 'task-card--done' if tarea.hecho else '' }}">
                 <div class="card-body">
                     <div class="mb-2">
-                        <span class="badge {{ 'bg-success' if tarea.hecho else 'bg-warning text-dark' }}">
+                        <span class="badge {{ 'badge-done' if tarea.hecho else 'badge-pending' }}">
                             {{ 'Completada' if tarea.hecho else 'Pendiente' }}
                         </span>
                     </div>
@@ -49,8 +49,8 @@
         <div class="col-12">
             <div class="empty-state text-center py-5 px-4">
                 <div class="empty-state-icon mb-3">☕</div>
-                <h5 class="text-muted mb-2">No tienes tareas pendientes</h5>
-                <p class="text-muted small mb-4">¡Tómate un café o crea tu primera tarea!</p>
+                <h5 class="text-secondary-custom mb-2">No tienes tareas pendientes</h5>
+                <p class="text-secondary-custom small mb-4">¡Tómate un café o crea tu primera tarea!</p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
                     + Nueva Tarea
                 </button>
@@ -71,7 +71,7 @@
             <form action="{{ url_for('agregar') }}" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="texto_tarea" class="form-label text-muted small">Descripción</label>
+                        <label for="texto_tarea" class="form-label small">Descripción</label>
                         <input
                             type="text"
                             id="texto_tarea"
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary px-4">Guardar</button>
                 </div>
             </form>
