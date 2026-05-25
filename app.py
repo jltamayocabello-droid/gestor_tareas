@@ -20,7 +20,7 @@ def agregar():
     return redirect("/")
 
 
-@app.route("/completar/<int:id>")
+@app.route("/completar/<int:id>", methods=["POST"])
 def completar(id):
     completar_tarea(id)
     return redirect("/")

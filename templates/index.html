@@ -1,63 +1,53 @@
+<!-- Heredamos toda la estructura base -->
 {% extends "base.html" %}
 
 {% block title %}Gestor de Tareas{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-12 col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h1 class="h4 mb-0">Mis tareas</h1>
-            </div>
-            <div class="card-body">
-                {# Formulario POST hacia la vista agregar #}
-                <form
-                    class="row g-2 mb-4"
-                    action="{{ url_for('agregar') }}"
-                    method="post"
-                >
-                    <div class="col">
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="texto_tarea"
-                            placeholder="Nueva tarea"
-                            required
-                        >
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">
-                            Agregar
-                        </button>
-                    </div>
-                </form>
+    <div class="col-md-8">
 
-                {# Listado de tareas ordenadas (incompletas primero) #}
-                <ul class="list-group list-group-flush lista-tareas">
-                    {% if tareas %}
-                        {% for tarea in tareas %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center {{ 'completada' if tarea.hecho else '' }}">
-                            <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
-                            {% if not tarea.hecho %}
-                            <a
-                                href="{{ url_for('completar', id=tarea.id) }}"
-                                class="btn btn-sm btn-outline-success"
-                            >
-                                Completar
-                            </a>
-                            {% else %}
-                            <span class="badge text-bg-success">Hecha</span>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    {% else %}
-                        <li class="list-group-item text-center text-muted vacio">
-                            No hay tareas.
-                        </li>
-                    {% endif %}
-                </ul>
+        <!-- Tarjeta para agregar nueva tarea -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form action="{{ url_for('agregar') }}" method="POST" class="d-flex gap-2">
+                    <input type="text" name="texto_tarea" class="form-control" placeholder="¿Qué necesitas hacer hoy?" required>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </form>
             </div>
         </div>
+
+        <!-- Lista de Tareas -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Tus Tareas</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for tarea in tareas %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center {{ 'bg-light text-muted' if tarea.hecho else '' }}">
+
+                        <span class="{{ 'text-decoration-line-through' if tarea.hecho else '' }}">
+                            {{ tarea.texto }}
+                        </span>
+
+                        <!-- Formulario seguro POST para completar la tarea -->
+                        {% if not tarea.hecho %}
+                            <form action="{{ url_for('completar', id=tarea.id) }}" method="POST" class="m-0">
+                                <button type="submit" class="btn btn-sm btn-outline-success">Completar</button>
+                            </form>
+                        {% else %}
+                            <span class="badge bg-secondary rounded-pill">Completada</span>
+                        {% endif %}
+
+                    </li>
+                {% else %}
+                    <li class="list-group-item text-center text-muted py-4">
+                        No hay tareas pendientes. ¡Buen trabajo!
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
     </div>
 </div>
 {% endblock %}
