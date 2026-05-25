@@ -1,41 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Tareas</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <main>
-        <h1>Gestor de Tareas</h1>
+{% extends "base.html" %}
 
-        {# Formulario POST hacia la vista agregar #}
-        <form class="form-agregar" action="{{ url_for('agregar') }}" method="post">
-            <input
-                type="text"
-                name="texto_tarea"
-                placeholder="Nueva tarea"
-                required
-            >
-            <button type="submit">Agregar</button>
-        </form>
+{% block title %}Gestor de Tareas{% endblock %}
 
-        {# Listado de tareas ordenadas (incompletas primero) #}
-        <ul class="lista-tareas">
-            {% if tareas %}
-                {% for tarea in tareas %}
-                <li class="{{ 'completada' if tarea.hecho else '' }}">
-                    <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
-                    {% if not tarea.hecho %}
-                    <a href="{{ url_for('completar', id=tarea.id) }}">Completar</a>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h1 class="h4 mb-0">Mis tareas</h1>
+            </div>
+            <div class="card-body">
+                {# Formulario POST hacia la vista agregar #}
+                <form
+                    class="row g-2 mb-4"
+                    action="{{ url_for('agregar') }}"
+                    method="post"
+                >
+                    <div class="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="texto_tarea"
+                            placeholder="Nueva tarea"
+                            required
+                        >
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">
+                            Agregar
+                        </button>
+                    </div>
+                </form>
+
+                {# Listado de tareas ordenadas (incompletas primero) #}
+                <ul class="list-group list-group-flush lista-tareas">
+                    {% if tareas %}
+                        {% for tarea in tareas %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center {{ 'completada' if tarea.hecho else '' }}">
+                            <span>#{{ tarea.id }} — {{ tarea.texto }}</span>
+                            {% if not tarea.hecho %}
+                            <a
+                                href="{{ url_for('completar', id=tarea.id) }}"
+                                class="btn btn-sm btn-outline-success"
+                            >
+                                Completar
+                            </a>
+                            {% else %}
+                            <span class="badge text-bg-success">Hecha</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-center text-muted vacio">
+                            No hay tareas.
+                        </li>
                     {% endif %}
-                </li>
-                {% endfor %}
-            {% else %}
-                <li class="vacio">No hay tareas.</li>
-            {% endif %}
-        </ul>
-    </main>
-</body>
-</html>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
