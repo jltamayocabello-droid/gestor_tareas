@@ -26,3 +26,12 @@ def completar_tarea(id):
             tarea["hecho"] = True
             return True
     return False
+
+
+def eliminar_tarea(id):
+    """Elimina la tarea con el id indicado. Devuelve True si existía."""
+    for i, tarea in enumerate(tareas):
+        if tarea["id"] == id:
+            tareas.pop(i)
+            return True
+    return False

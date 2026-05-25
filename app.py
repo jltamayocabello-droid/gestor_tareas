@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request
 
-from tareas import agregar_tarea, completar_tarea, tareas
+from tareas import agregar_tarea, completar_tarea, eliminar_tarea, tareas
 
 app = Flask(__name__)
 
@@ -23,6 +23,12 @@ def agregar():
 @app.route("/completar/<int:id>", methods=["POST"])
 def completar(id):
     completar_tarea(id)
+    return redirect("/")
+
+
+@app.route("/eliminar/<int:id>", methods=["POST"])
+def eliminar(id):
+    eliminar_tarea(id)
     return redirect("/")
 
 
