@@ -12,7 +12,7 @@ def agregar_tarea(texto):
     tarea = {
         "id": _siguiente_id,
         "texto": texto.strip(),
-        "completada": False,
+        "hecho": False,
     }
     tareas.append(tarea)
     _siguiente_id += 1
@@ -20,9 +20,9 @@ def agregar_tarea(texto):
 
 
 def completar_tarea(id):
-    """Marca como completada la tarea con el id indicado. Devuelve True si existe."""
+    """Marca hecho=True en la tarea con el id indicado. Devuelve True si existe."""
     for tarea in tareas:
         if tarea["id"] == id:
-            tarea["completada"] = True
+            tarea["hecho"] = True
             return True
     return False

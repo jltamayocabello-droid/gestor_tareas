@@ -1,34 +1,30 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request
 
 from tareas import agregar_tarea, completar_tarea, tareas
 
-# Instancia principal de la aplicación web.
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    """Muestra la página principal con el listado de tareas."""
-    return render_template("index.html", tareas=tareas)
+    # Ordenar tareas: incompletas primero, luego completadas
+    tareas_ordenadas = sorted(tareas, key=lambda t: t["hecho"])
+    return render_template("index.html", tareas=tareas_ordenadas)
 
 
 @app.route("/agregar", methods=["POST"])
 def agregar():
-    """Recibe el texto del formulario y crea una tarea nueva."""
-    texto = request.form.get("texto", "")
-    if texto.strip():
-        agregar_tarea(texto)
-    # Tras guardar, volvemos al inicio (patrón POST-redirect-GET).
-    return redirect(url_for("index"))
+    texto_tarea = request.form.get("texto_tarea")
+    if texto_tarea:
+        agregar_tarea(texto_tarea)
+    return redirect("/")
 
 
-@app.route("/completar/<int:id>", methods=["POST"])
+@app.route("/completar/<int:id>")
 def completar(id):
-    """Marca como completada la tarea cuyo id viene en la URL."""
     completar_tarea(id)
-    return redirect(url_for("index"))
+    return redirect("/")
 
 
 if __name__ == "__main__":
-    # debug=True recarga el servidor al editar código (solo desarrollo).
     app.run(debug=True)
